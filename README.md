@@ -12,6 +12,7 @@
 | PGAdmin | 5050 |
 | PostgreSQL | 5432 |
 | App | 3333 |
+| Prisma Studio (disponível apenas após lançar o comando `pnpm prisma studio`) | 5555 |
 
 - #### 1º Passo:
 
