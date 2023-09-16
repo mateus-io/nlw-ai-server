@@ -1,0 +1,51 @@
+version: "2"
+
+services:
+  postgresql:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./db:/var/lib/postgresql/data
+    networks:
+      mynetwork:
+        ipv4_address: 172.14.0.5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: no
+    environment:
+      PGADMIN_LISTEN_PORT: 5050
+      PGADMIN_DEFAULT_EMAIL: mateussioo610@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pass
+    depends_on:
+      - postgresql
+    ports:
+      - "5050:5050"
+    networks:
+      mynetwork:
+        ipv4_address: 172.14.0.6
+
+  app:
+    restart: always
+    environment:
+      DATABASE_URL: postgres://postgres:pass@postgresql:5432/mydb
+    build:
+      context: ../
+      dockerfile: ./docker/app/Dockerfile
+    depends_on:
+      - postgresql
+    ports:
+      - "3333:3333"
+    networks:
+      mynetwork:
+        ipv4_address: 172.14.0.7
+
+networks:
+  mynetwork:
+    name: mynetwork
+    external: true
