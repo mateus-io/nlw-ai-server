@@ -34,6 +34,7 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgres://postgres:pass@postgresql:5432/mydb?schema=public
+      OPEN_AI_KEY: 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
     build:
       context: ../
       dockerfile: ./docker/app/Dockerfile
@@ -41,6 +42,7 @@ services:
       - postgresql
     volumes: 
       - ../migrations:/home/node/app/prisma/migrations
+      - ../tmp:/home/node/app/tmp
     ports:
       - "3333:3333"
       - "5555:5555"

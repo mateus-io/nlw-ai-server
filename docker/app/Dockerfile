@@ -5,7 +5,7 @@ WORKDIR /home/node/app
 
 COPY . ./
 
-RUN pnpm install
+RUN yes n | pnpm install
 
 EXPOSE 3333
 
